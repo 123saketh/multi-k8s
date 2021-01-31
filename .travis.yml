@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t 123saketh/mutli-docker -f ./client/Dockerfile.dev ./client
+
+scripts:
+  - docker run 123saketh/mutli-docker npm run test -- --watchAll=false
+
+after_success:
+  - docker build -t 123saketh/mutli-client ./client
+  - docker build -t 123saketh/mutli-nginx ./nginx
+  - docker build -t 123saketh/mutli-server ./server
+  - docker build -t 123saketh/mutli-worker ./worker
+  #login into docker cli
+  - echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin
+  #push images to docker hub
+  - docker push 123saketh/mutli-client
+  - docker push 123saketh/mutli-nginx 
+  - docker push 123saketh/mutli-server
+  - docker push 123saketh/mutli-worker
+
+
+
