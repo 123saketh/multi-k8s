@@ -5,7 +5,7 @@
         "pg": "*",
         "cors": "*",
         "nodemon": "*",
-        "body-parser":"*"
+        "body-parser": "*"
     },
     "scripts": {
         "start": "node index.js",
